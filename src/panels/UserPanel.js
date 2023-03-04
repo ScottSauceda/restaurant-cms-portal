@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 import { GetUserInformation } from "../hooks";
 import UserDisplay from "../tables/UserDisplay";
 
 const UserPanel = () => {
     const [data, loading] = GetUserInformation(0);
-    const [users, setUsers] = useState(null);
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
     localStorage.clear()
 
     useEffect(() => {
         if(data) {
                 console.log("UserPanel data");
                 console.log(data);
-            const formattedUsers = data.map((obj,i) => {
-            // const formattedUser = data(obj) => {
-                return {
-                    id: obj.users_id,
-                    userName: obj.userName,
-                    first_name: obj.first_name,
-                    last_name: obj.last_name,
-                    email: obj.email,
-                    phone_number: obj.phone_number,
-                    account_active: '' + obj.isActive
+            const formattedUser = {
+                    id: data.users_id,
+                    userName: data.userName,
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    email: data.email,
+                    phone_number: data.phone_number,
+                    account_active: '' + data.isActive
                 };
-            });
-            setUsers(formattedUsers);
-            // setUser(formattedUser);
-            // console.log("UserPanel users");
-            // console.log(formattedUser);
+            setUser(formattedUser);
+
         }
-    // }, [data]);
     }, [data]);
     
     const addUser = () => {
@@ -61,25 +55,29 @@ const UserPanel = () => {
     };
 
     return (
-        <div className="row">
-            <div className="col-md-3">
-                <h2>Edit User</h2>
+        <div>
+            <div className="row">
+                {loading || !user ? (
+                    <div className = "col-md-9">
+                        <p>Loading...</p>
+                    </div>
+                ): (
+                    <div className="col-md-9">
+                        <h2>Welcome {user.userName}</h2>
+                        <UserDisplay 
+                            user={user}
+                            deactivatingUser={deactivatingUser}
+                            editUser={editUser}
+                        />
+                    </div>
+                )}
             </div>
-            {loading || !users ? (
-                <div className = "col-md-9">
-                    <p>Loading...</p>
-                </div>
-            ): (
-                <div className="col-md-9">
-                    <h2>View user</h2>
-                    <UserDisplay 
-                        users={users}
-                        // user={user}
-                        deactivatingUser={deactivatingUser}
-                        editUser={editUser}
-                    />
-                </div>
-            )}
+            <div className = "row">
+                    <Link to="/restaurants">View Restaurants</Link>
+            </div>
+            <div className = "row">
+                <Link to="/locations">View Locations</Link>
+            </div>
         </div>
     );
 };

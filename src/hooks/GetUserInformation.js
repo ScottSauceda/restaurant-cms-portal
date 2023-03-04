@@ -7,8 +7,7 @@ const GetUserInformation = (length) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/user/allUserInformation`)
-        // axios.get(`http://localhost:8080/user/7`)
+        axios.get(`http://localhost:8080/user/7`)
         .then((response) => {
             setData(response.data);
             setLoading(false);

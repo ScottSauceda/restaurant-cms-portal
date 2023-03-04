@@ -46,3 +46,5 @@ const UserTable = (props) => {
         </table>
     )
 }
+
+export default UserTable;
