@@ -17,14 +17,11 @@ const UserDisplay = (props) => {
         <div className="d-flex flex-column justify-content-center">
             {
                 props.user ? (
-
-                        <UserDisplayEntry 
-                            user = {props.user}
-                            activeState = {activeState}
-                        />
-
-                        
-
+                    <UserDisplayEntry 
+                        user = {props.user}
+                        editUser = {props.editUser}
+                        activeState = {activeState}
+                    />
                 ) : (
                     <div>
                         <p>No user to display</p>
