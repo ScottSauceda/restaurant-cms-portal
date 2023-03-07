@@ -3,15 +3,17 @@ import UserDisplayEntry from '../components/UserDisplayEntry';
 
 const UserDisplay = (props) => {
     let activeState = "";
-    // console.log("HEEEEERRRRREEEEEE!!!!!")
-    // console.log("UserDisplay props");
-    // console.log(props.user);
+    console.log("UserDisplay props");
+    console.log(props.user);
 
-    if(props.user.account_active === "true"){
+    if(props.user.isActive === "true"){
         activeState = "Deactivate";
     } else {
         activeState = "Activate";
     }
+
+    // console.log("activeState");
+    // console.log(activeState);
 
     return (
         <div className="d-flex flex-column justify-content-center">
@@ -20,6 +22,7 @@ const UserDisplay = (props) => {
                     <UserDisplayEntry 
                         user = {props.user}
                         editUser = {props.editUser}
+                        deactivatingUser = {props.deactivatingUser}
                         activeState = {activeState}
                     />
                 ) : (

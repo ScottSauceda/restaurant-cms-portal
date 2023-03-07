@@ -20,7 +20,7 @@ const UserDisplayEntry = (props) => {
                     <p className="p-2"><b>Last Name:</b> {props.user.lastName}</p>
                     <p className="p-2"><b>Email:</b> {props.user.email}</p>
                     <p className="p-2"><b>Phone:</b> {props.user.phone}</p>
-                    <p className="p-2"><b>Account Active:</b> {props.user.account_active}</p>
+                    <p className="p-2"><b>Account Active:</b> {props.user.isActive}</p>
                 </div>
             </div>
         </div>

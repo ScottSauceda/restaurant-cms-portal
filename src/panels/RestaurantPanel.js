@@ -15,15 +15,14 @@ const RestaurantPanel = () => {
             const formattedRestaurant = data.map((obj, i) => {
                 return {
                     id: obj.restaurantId,
-                    location_id: obj.location_id,
-                    owner_id: obj.owner_id,
+                    ownerId: obj.ownerId,
                     name: obj.name,
-                    location_name: obj.location_name,
                     address: obj.address,
                     city: obj.city,
                     state: obj.state,
-                    zip_code: obj.zip_code,
-                    owner_name: obj.owner_name,
+                    zipCode: obj.zipCode,
+                    isActive: "" + obj.isActive,
+                    ownerName: obj.ownerName,
                     restaurantReviews: obj.restaurantReviews,
                 };
             });
@@ -43,7 +42,7 @@ const RestaurantPanel = () => {
     const [editing, setEditing] = useState(false);
     const [deactivating, setDeactivating] = useState(false);
 
-    const initialRestaurant = {id: null, location_id: "", owner_id: "", name: "", location_name: "", address: "", city: "", state: "", zip_code: "", owner_name: "",  restaurantReviews: []};
+    const initialRestaurant = {id: null, ownerId: "", name: "", address: "", city: "", state: "", zipCode: "", ownerName: "", isActive: "",  restaurantReviews: []};
     const[ currentRestaurant, setCurrentRestaurant] = useState(initialRestaurant);
 
 

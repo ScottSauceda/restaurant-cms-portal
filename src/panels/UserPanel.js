@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import DeactivateUserForm from "../forms/DeactivateUserForm";
 import EditUserForm from "../forms/EditUserForm";
 
 import { GetUserInformation } from "../hooks";
@@ -12,17 +13,19 @@ const UserPanel = () => {
 
     useEffect(() => {
         if(data) {
-                console.log("UserPanel data");
-                console.log(data);
+            
+            console.log("UserPanel data");
+            console.log(data);
+
             const formattedUser = {
-                    id: data.users_Id,
+                    id: data.usersId,
                     userName: data.userName,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     email: data.email,
                     phone: data.phone,
-                    account_active: '' + data.isActive
-                };
+                    isActive: '' + data.isActive
+            };
             setUser(formattedUser);
 
         }
@@ -35,28 +38,28 @@ const UserPanel = () => {
     const[editing, setEditing] = useState(false);
     const [deactivating, setDeactivating] = useState(false);
 
-    const initialUser = { id: null, userName: "", firstName: "", lastName: "", email: "", phone: "", account_active: "" };
+    const initialUser = { id: null, userName: "", firstName: "", lastName: "", email: "", phone: "", isActive: "" };
     const [currentUser, setCurrentUser] = useState(initialUser);
-
 
     const editUser = (id, user) => {
         setEditing(true);
         setCurrentUser(user);
     }
 
-
     const deactivatingUser = (id, user) => {
-
+        setDeactivating(true);
+        setCurrentUser(user);
     }
 
-
     const updateDeactivateUser = (oldUser) => {
-
+        setCurrentUser(oldUser);
+        setDeactivating(false);
     }
 
 
     const updateUser = (newUser) => {
-
+        setCurrentUser(newUser);
+        setEditing(false);
     };
 
     return (
@@ -66,6 +69,11 @@ const UserPanel = () => {
                     {deactivating ? (
                         <div>
                             <h2>Set Active</h2>
+                            <DeactivateUserForm 
+                                currentUser={currentUser}
+                                setDeactivating={setDeactivating}
+                                updateDeactivateUser={updateDeactivateUser}
+                            />
                         </div>
                     ): editing? (
                         <div>
@@ -99,9 +107,6 @@ const UserPanel = () => {
             </div>
             <div className = "row">
                     <Link to="/restaurants">View Restaurants</Link>
-            </div>
-            <div className = "row">
-                <Link to="/locations">View Locations</Link>
             </div>
         </div>
     );
