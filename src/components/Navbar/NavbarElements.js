@@ -51,3 +51,82 @@ white-space: nowrap; */
     display: none;
   }
 `;
+
+
+            // <Nav>
+            //     <NavMenu>
+            //         <NavLink to="/signup">
+            //             Sign Up
+            //         </NavLink>
+            //         <NavLink to="/">
+            //             Home
+            //         </NavLink>
+
+            //         {/* {
+            //             sessionActive ? (
+            //                 <div> */}
+            //             <NavLink to="/logout">
+            //                 Log Out
+            //             </NavLink>
+            //             <NavLink to="/dashboard">
+            //                 Dashboard
+            //             </NavLink>
+            //             <NavLink to="/restaurants">
+            //                 Restaurants
+            //             </NavLink>
+            //             {/* </div>
+            //             ): ( */}
+            //             <NavLink to="/login">
+            //                 Log In
+            //             </NavLink>       
+            //              {/* )
+            //          }  */}
+            //     </NavMenu>
+            // </Nav>
+
+
+
+            // if(response.data) {
+            
+            //   console.log("UserPanel data");
+            //   console.log(data);
+
+            //   if(response.data.roleName === "owner"){
+            //       console.log("is owner")
+
+            //       console.log("signing in owner, rerouting to user dashboard");
+            //       // alert("signing in owner, rerouting to user dashboard");
+
+            //       setTimeout(() => {
+            //           console.log("1");
+            //           navigate("/dashboard");
+            //       }, 3000);
+
+            //       console.log("2");
+            //       console.log("3");
+
+            //       // console.log("cleared timeout");
+            //       // clearTimeout(timeout);
+
+
+
+            //   } else {
+            //       console.log("is not owner");
+
+            //       console.log("Something went wrong. Sending to sign up.");
+            //       // alert("Something went wrong. Sending to sign up.");
+                  
+            //       setTimeout(() => {
+            //           console.log("1");
+            //           navigate("/signup");
+            //       }, 3000);
+
+
+            //       console.log("2");
+            //       console.log("3");
+
+            //       // clearTimeout(timeout);
+
+
+
+            //   }

@@ -1,5 +1,6 @@
 import React from "react";
 import RestaurantPanel from "../panels/RestaurantPanel";
+import Navbar from "../components/Navbar";
 
 const Restaurant = () => {
     return (

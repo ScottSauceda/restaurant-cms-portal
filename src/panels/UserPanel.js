@@ -7,9 +7,20 @@ import { GetUserInformation } from "../hooks";
 import UserDisplay from "../tables/UserDisplay";
 
 const UserPanel = () => {
-    const [data, loading] = GetUserInformation(0);
+
+
+
+            console.log('session: loginStatus');
+            console.log(sessionStorage.getItem('userLoginStatus'));
+
+            console.log('session: userId');
+            console.log(sessionStorage.getItem('userId'));
+
+    const [data, loading] = GetUserInformation(0, sessionStorage.getItem('userId'));
     const [user, setUser] = useState(null);
     localStorage.clear()
+
+
 
     useEffect(() => {
         if(data) {
@@ -31,9 +42,6 @@ const UserPanel = () => {
         }
     }, [data]);
     
-    const addUser = () => {
-
-    }
 
     const[editing, setEditing] = useState(false);
     const [deactivating, setDeactivating] = useState(false);
@@ -86,7 +94,7 @@ const UserPanel = () => {
                         </div>
                     ): (
                         <div>
-                            <h2>Add User</h2>
+                            <h2>User </h2>
                         </div>
                     )}
                 </div>
@@ -106,7 +114,7 @@ const UserPanel = () => {
                 )}
             </div>
             <div className = "row">
-                    <Link to="/restaurants">View Restaurants</Link>
+                    <Link to="/restaurants" >View Restaurants</Link>
             </div>
         </div>
     );

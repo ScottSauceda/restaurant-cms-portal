@@ -56,8 +56,9 @@ const EditUserForm = (props) => {
         if(user.userName) props.updateUser(user);
         const data = {firstName, lastName, email, phone};
 
+
         axios
-            .put("http://localhost:8080/profile/update/2", {
+            .put(`http://localhost:8080/profile/update/${sessionStorage.getItem('userId')}`, {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,
