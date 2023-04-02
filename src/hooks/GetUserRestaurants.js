@@ -8,7 +8,7 @@ const GetUserRestaurants = (length, useridprop) => {
 
     useEffect(() => {
         fetch(
-            `http://localhost:8080/restaurant/restaurants/${useridprop}`, // pass this as a variable
+            `http://localhost:8080/api/restaurant/restaurants/${useridprop}`, // pass this as a variable
             {
                 method: "GET",
                 headers: new Headers({})
@@ -18,7 +18,7 @@ const GetUserRestaurants = (length, useridprop) => {
         .then(response => {
             setData(response);
             setLoading(false);
-            console.log(response)
+            // console.log(response)
         })
         .catch(error => { 
             console.log(error)

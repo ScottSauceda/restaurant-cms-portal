@@ -82,7 +82,7 @@ const DeactivateRestaurantForm = (props) => {
 //         // console.log(data);
 
         axios
-        .put("http://localhost:8080/restaurant/setActive", {
+        .put("http://localhost:8080/api/restaurant/setActive", {
             restaurantId: data.restaurantId,
             ownerId: data.ownerId,
             isActive: data.isActive

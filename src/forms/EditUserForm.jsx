@@ -9,13 +9,14 @@ const EditUserForm = (props) => {
     }, [props])
 
     const [user, setUser] = useState(props.currentUser);
-    const [users_id] = useState(props.currentUser.id);
+    const [usersId] = useState(props.currentUser.id);
     const [userName, setUserName] = useState(props.currentUser.userName);
     const [firstName, setFirstName] = useState(props.currentUser.firstName);
     const [lastName, setLastName] = useState(props.currentUser.lastName);
     const [email, setEmail] = useState(props.currentUser.email);
     const [phone, setPhone] = useState(props.currentUser.phone);
-    // const [isActive, setIsActive] = useState.currentUser.isActive; // setting active status of account will be its own thing
+    // const [isActive, setIsActive] = useState.currentUser.isActive; // setting active status of account will happen elsewhere
+    const [errorMessage, setErrorMessage] = useState(null);
 
 
     const handleChange = e => {
@@ -54,11 +55,12 @@ const EditUserForm = (props) => {
     const handleSubmit = e => {
         e.preventDefault();
         if(user.userName) props.updateUser(user);
-        const data = {firstName, lastName, email, phone};
+        const data = {usersId, firstName, lastName, email, phone};
 
 
         axios
-            .put(`http://localhost:8080/profile/update/${sessionStorage.getItem('userId')}`, {
+            .put(`http://localhost:8080/api/profile/update`, {
+                usersId: data.usersId,
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,
@@ -69,9 +71,15 @@ const EditUserForm = (props) => {
             })
             .catch((error) => {
                 console.log(error);
+                console.log("unspecified error");
+                console.log(error.response.data);
+                // props.setEditing = true;
+                // setErrorMessage(error.response.data);
             })
 
-        // window.location.reload();
+
+        console.log('window reload = false');
+        // window.location.reload(false);
     }
 
     return (
@@ -86,7 +94,7 @@ const EditUserForm = (props) => {
             <input className="u-full-width" id="lastName" type="text" value={user.lastName} name="lastName" placeholder="Last Name" onChange={handleChange} />
 
             <label>Email</label>
-            <input className="u-full-width" id="email" type="text" value={user.email} name="email" olaceholder="user@mail.com" onChange={handleChange} />
+            <input className="u-full-width" id="email" type="text" value={user.email} name="email" placeholder="user@mail.com" onChange={handleChange} />
 
             <label>Phone</label>
             <input className="u-full-width" id="phone" type="text" value={user.phone} name="phone" placeholder='###-###-####' onChange={handleChange} />
@@ -94,8 +102,8 @@ const EditUserForm = (props) => {
 
             <button className="button-primary" id="submitButton" type="submit" onClick={handleSubmit}>Save user</button>
             <button type="submit" onClick={() => props.setEditing(false)}>Cancel</button>
-
-        </form>
+            <div style={{color: 'red'}} >&nbsp;{errorMessage}</div>        
+        </form> 
     )
 }
 

@@ -10,11 +10,11 @@ const UserPanel = () => {
 
 
 
-            console.log('session: loginStatus');
-            console.log(sessionStorage.getItem('userLoginStatus'));
+    console.log('session: loginStatus');
+    console.log(sessionStorage.getItem('userLoginStatus'));
 
-            console.log('session: userId');
-            console.log(sessionStorage.getItem('userId'));
+    console.log('session: userId');
+    console.log(sessionStorage.getItem('userId'));
 
     const [data, loading] = GetUserInformation(0, sessionStorage.getItem('userId'));
     const [user, setUser] = useState(null);
@@ -86,11 +86,12 @@ const UserPanel = () => {
                     ): editing? (
                         <div>
                             <h2>Edit User</h2>
-                            <EditUserForm 
+                            
+                            {/* <EditUserForm 
                                 currentUser={currentUser}
                                 setEditing={setEditing}
                                 updateUser={updateUser}
-                            />
+                            /> */}
                         </div>
                     ): (
                         <div>

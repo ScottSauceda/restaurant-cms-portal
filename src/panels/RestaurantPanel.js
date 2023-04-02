@@ -13,7 +13,7 @@ const RestaurantPanel = () => {
     const navigate = useNavigate();
 
     if(sessionStorage.getItem('userLoginStatus') == true){
-        console.log("user logged in, fetching restaurants");
+        // console.log("user logged in, fetching restaurants");
       } else {
         // const tempID = 2;
       }
@@ -23,8 +23,8 @@ const RestaurantPanel = () => {
     
     useEffect(() => {
         if(data){
-            console.log("RestaurantPanel Data");
-            console.log(data);
+            // console.log("RestaurantPanel Data");
+            // console.log(data);
             const formattedRestaurant = data.map((obj, i) => {
                 return {
                     id: obj.restaurantId,
@@ -64,37 +64,58 @@ const RestaurantPanel = () => {
     const[ currentRestaurant, setCurrentRestaurant] = useState(initialRestaurant);
 
     const initialImage = {imgId: null, imgName: "", imgSrc: "", imgType: "", usersId: null};
-    // const [currentImage, setCurrentImage] = useState(initialImage);
+    const [currentImage, setCurrentImage] = useState(initialImage);
 
 
 
-
+    // ###      ###     ###     ###     ###
     const editRestaurant = (id, restaurant) => {
         setEditing(true);
+        console.log("editRestaurant restaurant: inside RestaurantPanel");
+        console.log(restaurant);
+        console.log("id  inside RestaurantPanel");
+        console.log(id);
         setCurrentRestaurant(restaurant);
+        // console.log("current restaurant");
+        // console.log(currentRestaurant);
     }   
 
+
+
+    // ###      ###     ###     ###     ###
     const deactivatingRestaurant = (id, restaurant) => {
         setDeactivating(true);
         setCurrentRestaurant(restaurant);
     }
 
+
+
+    // ###      ###     ###     ###     ###
     const updateDeactivateRestaurant = (oldRestaurant) => {
         setDeactivating(false);
         setCurrentRestaurant(oldRestaurant);
-        
     }
 
+
+    // ###      ###     ###     ###     ###
     const updateRestaurant = (newRestaurant) => {
+        console.log()
         setEditing(false);
         setCurrentRestaurant(newRestaurant);
     }
 
 
-    const deleteImage = (id, image, restaurant) => {
+
+    // ###      ###     ###     ###     ###
+    // const deleteImage = (restaurant) => {
+    const deleteImage = (restaurant, image) => {
+        console.log("deleteImage image: inside RestaurantPanel");
+        console.log(image);
+        console.log("restaurant  inside RestaurantPanel");
+        console.log(restaurant);
         setDeletingPhoto(true);
-        // setCurrentImage(image);
-        setCurrentRestaurant(restaurant)
+        setCurrentRestaurant(restaurant);
+        setCurrentImage(image);
     }
 
 
@@ -133,8 +154,8 @@ const RestaurantPanel = () => {
                     <div>
                         <h2>Delete Photo</h2>
                         <DeleteImageForm 
-                            // currentImage={currentImage}
                             currentRestaurant={currentRestaurant}
+                            image={currentImage}
                             setDeletingPhoto={setDeletingPhoto}
                             deleteImage={deleteImage}
                         />
@@ -150,7 +171,7 @@ const RestaurantPanel = () => {
             </div>
             {loading || !restaurants ? (
                 <div className="col-md-9">
-                    <p>Loading...</p>
+                    <p>No restaurants to display.</p>
                 </div>
             ): (
                 <div className="col-md-9">

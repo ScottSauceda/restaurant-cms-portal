@@ -7,7 +7,7 @@ const AddImageForm = (props) => {
     console.log(props);
 
     console.log("props.currentRestaurant.id");
-    // console.log(props.currentRestaurant.id);
+    console.log(props.currentRestaurant.id);
 
 
     const initImage = { imgName: '', imgSrc: '', imgType: 'restaurant', usersId: 0};
@@ -15,8 +15,8 @@ const AddImageForm = (props) => {
     const [image, setImage] = useState(initImage);
 
     // IDs
-    const [usersId, setUsersId] = useState();
-    // const [restaurantId] = useState(props.currentRestaurant.id);
+    const [usersId] = useState(sessionStorage.getItem('userId'));
+    const [restaurantId] = useState(props.currentRestaurant.id);
 
     // Data
     const [imgName, setImgName] = useState("");
@@ -50,6 +50,8 @@ const AddImageForm = (props) => {
 
 
         console.log("SUBMIT CLICKED! 1");
+        console.log("usersId");
+        console.log(usersId);
 
 
         if(image.imgName){
@@ -62,18 +64,17 @@ const AddImageForm = (props) => {
         const data = {imgName, imgSrc, imgType, usersId};
         console.log('data', data);
 
-        setUsersId(sessionStorage.getItem('userId'));
 
-        // axios
-        // .post("http://localhost:8080/image/restaurant/create/"+restaurantId, {
-        //     imgName: data.imgName,
-        //     imgSrc: data.imgSrc,
-        //     imgType: data.imgType,
-        //     usersId: data.usersId   
-        // })
+        axios
+        .post("http://localhost:8080/api/image/restaurant/create/"+restaurantId, {
+            imgName: data.imgName,
+            imgSrc: data.imgSrc,
+            imgType: data.imgType,
+            usersId: data.usersId   
+        })
 
-        // console.log('data sent for add image form');
-        // console.log(data);
+        console.log('data sent for add image form');
+        console.log(data);
 
         console.log("SUBMIT CLICKED! 2");
     }
@@ -81,7 +82,7 @@ const AddImageForm = (props) => {
     return(
         <form>
             <label>Restaurant Id(read only)</label>
-            {/* <input className="u-full-width" id="name" type="text" value={restaurantId} readOnly /> */}
+            <input className="u-full-width" id="name" type="text" value={restaurantId} readOnly />
 
             <label>Image Name</label>
             <input className="u-full-width" id="name" type="text" value={image.imgName} name="imgName" placeholder="restaurantPic1" onChange={handleChange} />

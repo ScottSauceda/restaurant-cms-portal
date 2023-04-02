@@ -4,6 +4,7 @@ import RestaurantDisplayEntry from "../components/RestaurantDisplayEntry";
 const RestaurantDisplay = (props) => {
 
     let activeState = "";
+    let resKey = "";
     console.log("RestaurantDisplay props");
     console.log(props);
 
@@ -17,12 +18,15 @@ const RestaurantDisplay = (props) => {
                         } else {
                             activeState = "Activate";
                         }
+
+                        resKey = restaurant.id;
                     
                         // console.log("activeState");
                         // console.log(activeState);
 
                         return (
                             <RestaurantDisplayEntry 
+                                key={"#"+resKey}
                                 restaurant = {restaurant}
                                 editRestaurant = {props.editRestaurant}
                                 deactivatingRestaurant = {props.deactivatingRestaurant}

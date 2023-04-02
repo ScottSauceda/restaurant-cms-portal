@@ -1,7 +1,7 @@
 import React, {  useState, useEffect } from "react";
-import { Nav, NavLink, NavMenu } from "./NavbarElements";
+// import { Nav, NavLink, NavMenu } from "./NavbarElements";
 
-const Navbar = () => {
+const NavbarLoggedIn = () => {
 
     return (
 
@@ -11,10 +11,13 @@ const Navbar = () => {
                 </div>
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link text-light" href="/signup" >Signup</a>
+                            <a className="nav-link text-light" href="/logout" >Logout</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-light" href="/login" >Login</a>
+                            <a className="nav-link text-light" href="/profile" >Profile</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-light" href="/newRestaurants" >Restaurants</a>
                         </li>
                     </ul>
                      
@@ -23,4 +26,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default NavbarLoggedIn;

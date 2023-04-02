@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const EditRestaurantForm = (props) => {
 
+    console.log("edit restaurant props");
+    console.log(props);
+
     useEffect(() => {
         setRestaurant(props.currentRestaurant);
     }, [props]);
@@ -65,8 +68,11 @@ const EditRestaurantForm = (props) => {
         console.log("edit restaurant data");
         console.log(data);
 
+        console.log("restaurant");
+        console.log(restaurant);
+
         axios
-            .put("http://localhost:8080/restaurant/update/1", {
+            .put("http://localhost:8080/api/restaurant/update/"+restaurantId, {
                 ownerId: data.ownerId,
                 name: data.name,
                 address: data.address,

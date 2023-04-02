@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AddRestaurantForm = (props) => {
-
-    console.log("add restaurant form activated!!!!!")
-
-
+    
     const initRestaurant = { ownerId: '', name: '', address: '', city: '', state: '', zipCode: '', isActive: true};
 
     const [restaurant, setRestaurant] = useState(initRestaurant);
 
     // IDs
-    const [ownerId, setOwnerId] = useState();
+    const [ownerId] = useState(sessionStorage.getItem('userId'));
 
     // Data
     const [name, setName] = useState("");
@@ -45,9 +42,6 @@ const AddRestaurantForm = (props) => {
             case 'zipCode':
                 setZipCode(value);
                 break;
-            case 'owner_id':
-                setOwnerId(value);
-                break;
 
             default:
                 console.log("Not a valid input. Please try again.");
@@ -65,10 +59,13 @@ const AddRestaurantForm = (props) => {
         const data = {ownerId, name, address, city, state, zipCode, isActive};
         console.log('data', data);
 
-        setOwnerId(sessionStorage.getItem('userId'));
+        // setOwnerId(sessionStorage.getItem('userId'));
+
+        console.log('session: userId');
+        console.log(sessionStorage.getItem('userId'));
 
         axios
-        .post("http://localhost:8080/restaurant/create", {
+        .post("http://localhost:8080/api/restaurant/create", {
             ownerId: data.ownerId,
             name: data.name,
             address: data.address,

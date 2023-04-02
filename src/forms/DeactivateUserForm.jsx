@@ -81,7 +81,7 @@ const DeactivateUserForm = (props) => {
         // console.log(data);
 
         axios
-        .put("http://localhost:8080/user/setActive", {
+        .put("http://localhost:8080/api/user/setActive", {
             usersId: data.usersId,
             userName: data.userName,
             isActive: data.isActive

@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const DeleteImageForm = (id, props) => {
+const DeleteImageForm = (props) => {
 
     console.log("deleteImageForm props");
     console.log(props);
 
-    console.log("props.currentRestaurant");
-    console.log(props.currentRestaurant);
+    console.log("props.image");
+    console.log(props.image);
 
-    console.log("props.currentRestaurant");
-    console.log(props.currentImage);
+    console.log("props.id");
+    console.log(props.restaurant);
 
-    const [image, setImage] = useState("");
-    // const [image, setImage] = useState(props.currentImage);
-    // const [imgId, setImgId] = useState(props.imgId);
-    // const [imgName, setImgName] = useState(props.imgName);
+    // const [image, setImage] = useState("");
+    const [image, setImage] = useState(props.currentImage);
+    const [imgId, setImgId] = useState(props.imgId);
+    const [imgName, setImgName] = useState(props.imgName);
     const [confirmName, setConfirmName] = useState("");
 
 
@@ -27,8 +27,8 @@ const DeleteImageForm = (id, props) => {
 
         switch(name){
             case 'confirmImgName':
-                // setImgName(value);
-                // break;
+                setConfirmName(value);
+                break;
 
             default:
                 console.log("Not a valid input. Please try again.");
@@ -45,6 +45,9 @@ const DeleteImageForm = (id, props) => {
         console.log("SUBMIT CLICKED! 1");
 
         if(image.imgName){
+
+            console.log(image.imgName);
+
             console.log("image name exists in deleteimageform");
             handleChange(e, props.deleteImage(image));
         } else {
@@ -59,14 +62,14 @@ const DeleteImageForm = (id, props) => {
 
         // setUsersId(sessionStorage.getItem('userId'));
 
-        // axios
-        // .delete("http://localhost:8080/image/restaurant/delete/"+imgId, {
-        //     imgId: data.imgId,
-        //     imgName: data.imgName,
-        //     imgSrc: data.imgSrc,
-        //     imgType: data.imgType,
-        //     usersId: data.usersId   
-        // })
+        axios
+        .delete("http://localhost:8080/api/image/restaurant/delete/"+props.image.imgId, {
+            // imgId: data.imgId,
+            // imgName: data.imgName,
+            // imgSrc: data.imgSrc,
+            // imgType: data.imgType,
+            // usersId: data.usersId   
+        })
 
         // console.log('data sent for delete image form');
         // console.log(data);
@@ -77,10 +80,10 @@ const DeleteImageForm = (id, props) => {
     return(
         <form>
             <label>Image Id(read only)</label>
-            <input className="u-full-width" id="imgId" name="imgId" type="text" value={image.imgId} placeholder="---" readOnly />
+            <input className="u-full-width" id="imgId" name="imgId" type="text" value={props.image.imgId} placeholder="---" readOnly />
 
             <label>Image Name(readonly)</label>
-            <input className="u-full-width" id="imgName" name="imgName" type="text" value={image.imgName} placeholder="---"  readOnly />
+            <input className="u-full-width" id="imgName" name="imgName" type="text" value={props.image.imgName} placeholder="---"  readOnly />
 
             <label>Confirm Image Name</label>
             <input className="u-full-width" id="confirmImgName" name="confirmImgName" type="text" value={confirmName} placeholder="www.image.jpg" onChange={handleChange} />

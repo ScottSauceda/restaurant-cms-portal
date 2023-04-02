@@ -54,7 +54,7 @@ const AddOwnerForm = () => {
         console.log('data', data);
 
         axios
-        .post("http://localhost:8080/user/create", {
+        .post("http://localhost:8080/api/user/create", {
             userName: data.userName,
             password: data.password,
             firstName: data.firstName,

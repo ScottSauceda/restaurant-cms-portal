@@ -13,6 +13,7 @@ const LoginForm = () => {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -41,7 +42,7 @@ const LoginForm = () => {
         console.log('data', data);
 
         axios
-        .post("http://localhost:8080/user/login", {
+        .post("http://localhost:8080/api/auth/signin", {
             username: data.username,
             password: data.password
         })
@@ -51,29 +52,21 @@ const LoginForm = () => {
 
             if(response.data) {
             
-                console.log("UserPanel data");
-                console.log(data);
+                
+                if(response.data.roles[0] == "ROLE_OWNER"){
+                    console.log("user has role of owner, set sessionStore values and redirect to dashboard");
+                    
+                    sessionStorage.setItem("userLoginStatus", "true");
+                    sessionStorage.setItem('userId', response.data.id);
     
-                // const formattedUser = {
-                //         id: data.usersId,
-                //         userName: data.username,
-                //         firstName: data.firstName,
-                //         lastName: data.lastName,
-                //         email: data.email,
-                //         phone: data.phone,
-                //         isActive: '' + data.isActive
-                // };
-                // setUser(formattedUser);
+                    navigate("/profile", { state: { id: response.data.id }});
+                } else {
+                    console.log("user is not an owner, display bad credentials message on login");
 
-                // console.log("formattedUser");
-                // console.log(formattedUser);
+                    // alert("bad credentials")
+                    // setErrorMessage("bad credentials");
+                }
 
-                            sessionStorage.setItem("userLoginStatus", "true");
-                            sessionStorage.setItem('userId', response.data.usersId);
-
-                navigate("/dashboard", { state: { id: response.data.usersId }});
-
-    
             }
 
             
@@ -96,14 +89,22 @@ const LoginForm = () => {
 
         })
         .catch((error) => {
-            if(error.response){
-                console.log("server responded");
-                console.log(error.request)
-            } else if(error.request){
-                console.log("network error");
-            } else {
-                console.log(error);
-            }
+
+            console.log("unspecified error");
+            console.log(error.response.data.message);
+            setErrorMessage(error.response.data.message);
+            // setErrorMessage("bad credentials");
+
+            // if(error.response){
+            //     console.log("server responded");
+            //     console.log(error.response)
+            // } else if(error.request){
+            //     console.log("network error");
+            //     console.log(error.requeset);
+            // } else {
+            //     console.log("unspecified error");
+            //     console.log(error);
+            // }
         });
         
 
@@ -124,6 +125,11 @@ const LoginForm = () => {
                             <input className="u-full-width" id="password" type="password" value={user.password} name="password" placeholder="Password" required onChange={handleChange} />
 
                             <button className="button-primary" id="submitButton" type="submit" style={{ backgroundColor: 'red'}} onClick={handleSubmit}>Log In</button>
+                            <div></div>
+
+                            <div style={{color: 'red'}} >&nbsp;{errorMessage}</div>
+
+                            {/* <button>Signup</button> */}
                         </form>
                     </div>
                 </div>
