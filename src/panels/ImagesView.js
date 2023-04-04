@@ -68,9 +68,9 @@ const ImagesView = (props) => {
 
     return (
         <div>
-            { !props.images ? (
+            { props.images.length == 0 ? (
                 <div className="col-md-9">
-                    <p>Loading...</p>
+                    <p>No Images to display.</p>
                 </div>
             ) : deletingPhoto ? (
                 <form>

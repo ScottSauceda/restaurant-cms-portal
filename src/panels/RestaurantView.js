@@ -415,6 +415,7 @@ const RestaurantView = (props) => {
                             <div className="card-header d-flex justify-content-center align-items-center">
                                 <form>
                                     <p className="p-2"><b>Restaurant ID:</b> {props.restaurant.id}</p>
+                                    <p className="p-2"><b>Restaurant Name:</b> {props.restaurant.name}</p>
                                     <p className="p-2"><b>Address:</b> {props.restaurant.address}</p>
                                     <p className="p-2"><b>City:</b> {props.restaurant.city}</p>
                                     <p className="p-2"><b>State:</b> {props.restaurant.state}</p>
