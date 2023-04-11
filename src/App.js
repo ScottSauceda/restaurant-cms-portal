@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 
-import Login from "./components/AuthComponents/Login";
-import Register from "./components/AuthComponents/Register";
-import Home from "./components/AuthComponents/Home";
-// import Profile from "./components/AuthComponents/Profile";
-import Profile from "./pages/profile";
-import BoardUser from "./components/AuthComponents/BoardUser";
-import BoardOwner from "./components/AuthComponents/BoardOwner";
-import BoardAdmin from "./components/AuthComponents/BoardAdmin";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Home from "./components/Home";
+// import Profile from "./components/Profile";
+import UserView from "./panels/UserView";
+import BoardUser from "./components/BoardUser";
+import BoardOwner from "./components/BoardOwner";
+import BoardAdmin from "./components/BoardAdmin";
 
 // pre Auth pages
 import Signup from "./pages/signup";
-import NewRestaurant from "./pages/newRestaurants";
+// import NewRestaurant from "./pages/newRestaurants";
+import UserRestaurants from "./panels/UserRestaurants";
 import SingleRestaurant from "./pages/restaurant";
 import RestaurantImages from "./pages/restaurantImages";
 
@@ -59,9 +59,9 @@ const App = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          bezKoder
+          Foodie
         </Link>
-        <div className="navbar-nav mr-auto">
+        <div className="navbar-nav">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
               Home
@@ -101,6 +101,11 @@ const App = () => {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to={"/newRestaurants"} className="nav-link">
+                Restaurants
+              </Link>
+            </li>
+            <li className="nav-item">
               <a href="/login" className="nav-link" onClick={logOut}>
                 LogOut
               </a>
@@ -130,12 +135,12 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
           {/* <Route exact path="/register" element={<Register />} /> */}
           <Route path="/signup" exact element={<Signup />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/profile" element={<Profile />} />
+          {/* <Route exact path="/profile" element={<Profile />} /> */}
+          <Route exact path="/profile" element={<UserView />} />
           <Route path="/user" element={<BoardUser />} />
           <Route path="/owner" element={<BoardOwner/>} />
           <Route path="/admin" element={<BoardAdmin />} />
-          <Route path="/newRestaurants" exact element={<NewRestaurant/>} />
+          <Route path="/newRestaurants" exact element={<UserRestaurants/>} />
           <Route path="/restaurant" exact element={<SingleRestaurant/>} />
           <Route path="restaurantImages" exact element={<RestaurantImages />} />
         </Routes>

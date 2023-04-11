@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/auth/";
+const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/auth/";
 
 const register = (username, email, password) => {
   return axios.post(API_URL + "signup", {
@@ -11,6 +11,9 @@ const register = (username, email, password) => {
 };
 
 const login = (username, password) => {
+
+  console.log("signing in user")
+
   return axios
     .post(API_URL + "signin", {
       username,
@@ -18,6 +21,7 @@ const login = (username, password) => {
     })
     .then((response) => {
       if (response.data.username) {
+        console.log("setting user to localStorage")
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 

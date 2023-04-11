@@ -15,8 +15,8 @@ const GetUserInformation = (length, useridprop) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/user/${useridprop}`, { withCredentials: true })
-        // axios.get(`http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/user/${useridprop}`, { withCredentials: true })
+        // axios.get(`http://localhost:8080/api/user/${useridprop}`, { withCredentials: true })
+        axios.get(`http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/user/${useridprop}`, { withCredentials: true })
         .then((response) => {
             console.log("getUser response data");
             console.log(response.data);

@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import { GetUserRestaurants } from "../hooks";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../services/auth.service";
 import axios from 'axios';
 
 const UserRestaurants = () => {
     const navigate = useNavigate();
+    const currentUser = AuthService.getCurrentUser();
 
-    console.log("session owner");
-    console.log(sessionStorage.getItem('userId'))
+    console.log("currentUser");
+    console.log(currentUser);
 
-    const [data, loading] = GetUserRestaurants(0, sessionStorage.getItem('userId'));
+    const [data, loading] = GetUserRestaurants(0, currentUser.id);
     const [restaurants, setRestaurants] = useState(null);
 
     // adding restaurant
@@ -18,11 +20,11 @@ const UserRestaurants = () => {
     const [addRestaurantResponseMessage, setAddRestaurantResponseMessage] = useState(null);
     const [addRestaurantErrorMessage, setAddRestaurantErrorMessage] = useState(null);
 
-    const initRestaurant = { ownerId: sessionStorage.getItem('userId'), name: '', address: '', city: '', state: '', zipCode: '', isActive: true};
+    const initRestaurant = { ownerId: currentUser.id, name: '', address: '', city: '', state: '', zipCode: '', isActive: true};
     const [restaurant, setRestaurant] = useState(initRestaurant);
 
     // IDs
-    const [ownerId] = useState(sessionStorage.getItem('userId'));
+    const [ownerId] = useState(currentUser.id);
 
     // Data
     const [name, setName] = useState("");

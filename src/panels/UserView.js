@@ -8,12 +8,11 @@ import { GetUserInformation } from "../hooks";
 import axios from 'axios';
 
 const UserView = () => {
-    // const [data, loading] = GetUserInformation(0, sessionStorage.getItem('userId'));
-    const [data, loading] = useState("");
     const currentUser = AuthService.getCurrentUser();
 
     console.log("currentUser");
     console.log(currentUser);
+    const [data, loading] = GetUserInformation(0, currentUser.id);
 
 
     const [user, setUser] = useState(null);
@@ -42,7 +41,7 @@ const UserView = () => {
 
     console.log('session: userId');
     console.log(sessionStorage.getItem('userId'));
-    localStorage.clear()
+    // localStorage.clear()
 
     useEffect(() => {
         // data from GetUserInformation

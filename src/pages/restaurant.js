@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import RestaurantView from "../panels/RestaurantView";
-import NavbarLoggedIn from "../components/NavbarLoggedIn";
 import { useLocation } from "react-router-dom";
 
 const SingleRestaurant = (props) => {

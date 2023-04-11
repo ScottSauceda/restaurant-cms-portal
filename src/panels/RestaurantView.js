@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from "../components/Navbar";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -435,7 +434,7 @@ const RestaurantView = (props) => {
                                     <p className="p-2"><b>Active Status:</b> {props.restaurant.isActive}</p>
                                     {/* <p className="p-2"><b>Restaurant Images:</b> <a href="" onClick={() => handleViewImages(props.restaurant.restaurantImages)}>View Restaurant Images</a> </p> */}
                                     <p className="p-2"><b>Restaurant Images:</b> <Link to={"/restaurantImages"} state = {{restaurant_images: props.restaurant.restaurantImages, restaurant_id: props.restaurant.id}}>View Restaurant Images</Link> </p>
-                                    <p className="p-2"><b>Reviews:</b> <a href={"http://localhost:4200/" + props.restaurant.id} >See Reviews</a></p>
+                                    <p className="p-2"><b>Reviews:</b> <a href={"http://localhost:8081/restaurants/" + props.restaurant.id} >See Reviews</a></p>
                                 </form>
                             </div>
                             <button className="btn btn-primary me-2" onClick={() => setAddingPhoto(true)}>Add Photo</button>

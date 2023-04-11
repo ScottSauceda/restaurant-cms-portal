@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
 
-import UserService from "../../services/user.service";
-import EventBus from "../../common/EventBus";
+import UserService from "../services/user.service";
 
-const BoardAdmin = () => {
+
+const Home = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getAdminBoard().then(
+    UserService.getPublicContent().then(
       (response) => {
         setContent(response.data);
       },
       (error) => {
         const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
+          (error.response && error.response.data) ||
           error.message ||
           error.toString();
 
         setContent(_content);
-
-        if (error.response && error.response.status === 401) {
-          EventBus.dispatch("logout");
-        }
       }
     );
   }, []);
@@ -37,4 +31,4 @@ const BoardAdmin = () => {
   );
 };
 
-export default BoardAdmin;
+export default Home;
