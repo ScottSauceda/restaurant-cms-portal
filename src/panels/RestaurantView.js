@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RestaurantView = (props) => {
     const navigate = useNavigate();
@@ -199,8 +199,8 @@ const RestaurantView = (props) => {
         console.log("restaurant");
         console.log(restaurant);
 
-        axios
-        .put("http://localhost:8080/api/restaurant/update", {
+        axios.put("http://localhost:8080/api/restaurant/update", 
+        {
             restaurantId: restaurant.id,
             ownerId: restaurant.ownerId,
             name: restaurant.name,
@@ -209,6 +209,9 @@ const RestaurantView = (props) => {
             state: restaurant.state,
             zipCode: restaurant.zipCode,
             isActive: restaurant.isActive
+        }, 
+        { 
+            withCredentials: true 
         })
         .then((response) => {
             console.log(response);
@@ -239,11 +242,14 @@ const RestaurantView = (props) => {
         console.log(isActive);
 
 
-        axios
-        .put("http://localhost:8080/api/restaurant/setActive", {
+        axios.put("http://localhost:8080/api/restaurant/setActive", 
+        {
             restaurantId: restaurant.id,
             ownerId: restaurant.ownerId,
             isActive: data.isActive
+        }, 
+        { 
+            withCredentials: true 
         })
         .then((response) => {
             console.log(response);
@@ -280,11 +286,15 @@ const RestaurantView = (props) => {
 
 
         axios
-        .post("http://localhost:8080/api/image/restaurant/create/"+restaurant.id, {
+        .post("http://localhost:8080/api/image/restaurant/create/"+restaurant.id, 
+        {
             imgName: data.imgName,
             imgSrc: data.imgSrc,
             imgType: data.imgType,
             usersId: restaurant.ownerId   
+        }, 
+        { 
+            withCredentials: true 
         })
         .then((response) => {
             console.log(response);
@@ -423,7 +433,8 @@ const RestaurantView = (props) => {
                                     <p className="p-2"><b>Owner ID:</b> {props.restaurant.ownerId}</p>
                                     <p className="p-2"><b>Owner Name:</b> {props.restaurant.ownerName}</p>
                                     <p className="p-2"><b>Active Status:</b> {props.restaurant.isActive}</p>
-                                    <p className="p-2"><b>Restaurant Images:</b> <a href="" onClick={() => handleViewImages(props.restaurant.restaurantImages)}>View Restaurant Images</a> </p>
+                                    {/* <p className="p-2"><b>Restaurant Images:</b> <a href="" onClick={() => handleViewImages(props.restaurant.restaurantImages)}>View Restaurant Images</a> </p> */}
+                                    <p className="p-2"><b>Restaurant Images:</b> <Link to={"/restaurantImages"} state = {{restaurant_images: props.restaurant.restaurantImages, restaurant_id: props.restaurant.id}}>View Restaurant Images</Link> </p>
                                     <p className="p-2"><b>Reviews:</b> <a href={"http://localhost:4200/" + props.restaurant.id} >See Reviews</a></p>
                                 </form>
                             </div>

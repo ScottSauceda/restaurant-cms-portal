@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ImagesView = (props) => {
-    console.log("ImagesView props");
-    console.log(props);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const [deletingPhoto, setDeletingPhoto] = useState(false);
-    const [image, setImage] = useState(props.currentImage);
-    const [imgId, setImgId] = useState(props.imgId);
-    const [imgName, setImgName] = useState(props.imgName);
+    // const [images, setImages] = useState(location.state.restaurant_images);
+    const [image, setImage] = useState(null);
+    const [imgId, setImgId] = useState("");
+    const [imgName, setImgName] = useState("");
     const [confirmName, setConfirmName] = useState("");
     const [deleteImageResponseMessage, setDeleteImageResponseMessage] = useState(null);
     const [deleteImageErrorMessage, setDeleteImageErrorMessage] = useState(null);
     
 
     useEffect(() => {
-
+        console.log("ImagesView props");
+        console.log(props);
+        console.log(props.restaurantId);
+        console.log(props.images);
+        // console.log("props(images) for RestaurantImages page");
+        // console.log(location.state.restaurant_images[0].imgName);
+        // console.log("props(restaurant id) for RestaurantImages page");
+        // console.log(location.state.restaurant_id);
     })
 
     const handleDeleteChange = e => {
@@ -45,22 +53,28 @@ const ImagesView = (props) => {
         console.log("image to be deleted");
         console.log(image);
 
-        axios
-        .delete("http://localhost:8080/api/image/restaurant/delete/"+props.restaurantId, {data: {
+        const data = {
             imgId: image.imgId,
-            usersId: image.usersId   
-        }})
+            usersId: image.usersId
+        }
+
+        // const headers = {
+        //     withCredentials: true
+        // }
+
+        axios.delete("http://localhost:8080/api/image/restaurant/delete/"+props.restaurantId, {
+            data, withCredentials:true
+        })
         .then((response) => {
             console.log(response);
             console.log(response.data);
             setDeleteImageResponseMessage(response.data);
-            // navigate("/newRestaurants");    
+            navigate("/newRestaurants");    
         })
         .catch((error) => {
             console.log(error);
-            console.log("unspecified error");
-            console.log(error.response.data);
-            setDeleteImageErrorMessage(error.response.data);
+            console.log(error.response.data.message);
+            setDeleteImageErrorMessage(error.response.data.message);
         })
 
 
@@ -68,7 +82,7 @@ const ImagesView = (props) => {
 
     return (
         <div>
-            { props.images.length == 0 ? (
+            { props.images === 0 ? (
                 <div className="col-md-9">
                     <p>No Images to display.</p>
                 </div>
@@ -91,8 +105,9 @@ const ImagesView = (props) => {
                 </form>
             ) : ( 
             <div>
+                <h2>Image</h2>
                 {
-                    props.images.map(image => {
+                    location.state.restaurant_images.map(image => {
                         return (
                             <div className="row">
                                 <div className="d-flex flex-column justify-content-center">

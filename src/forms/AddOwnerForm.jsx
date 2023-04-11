@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AddOwnerForm = () => {
-    const initUser = {  userName: '', password: '', firstName: '', lastName: '', email: '', phone: '', roleId: 0, isActive: true};
+    const initUser = {  userName: '', password: '', firstName: '', lastName: '', email: '', phone: '', roleName: ["owner"], isActive: true};
 
     const [user, setUser] = useState(initUser);
 
@@ -12,8 +12,11 @@ const AddOwnerForm = () => {
     const [lastName, setLastName] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
-    const [roleId] = useState(2); // role id for an owner
     const [isActive] = useState("true");
+
+    const [activateResponseMessage, setActivateResponseMessage] = useState(null);
+    const [activateErrorMessage, setActivateErrorMessage] = useState(null);
+
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -50,23 +53,37 @@ const AddOwnerForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        const data = {userName, password, firstName, lastName, email, phone, roleId, isActive};
+        const data = {userName, password, firstName, lastName, email, phone, isActive};
         console.log('data', data);
 
         axios
-        .post("http://localhost:8080/api/user/create", {
-            userName: data.userName,
+        .post("http://localhost:8080/api/user/signup", {
+            username: data.userName,
             password: data.password,
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,   
             phone: data.phone,
-            roleId: data.roleId,
-            isActive: data.isActive
+            role: user.roleName,
+        },
+        { 
+            withCredentials: true 
+        })
+        .then((response) => {
+            console.log(response);
+            console.log(response.data);
+            setActivateResponseMessage(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+            console.log("unspecified error");
+            console.log(error.response.data);
+            setActivateErrorMessage(error.response.data);
         })
 
         console.log('data sent for activate user');
         console.log(data);
+        console.log(user.roleName);
     }
 
     return(
@@ -94,6 +111,8 @@ const AddOwnerForm = () => {
                             <input className="u-full-width" id="phone" type="text" value={user.phone} name="phone" placeholder="###-###-####" required onChange={handleChange} />
 
                             <button className="button-primary" id="submitButton" type="submit" style={{ backgroundColor: 'red'}} onClick={handleSubmit}>Sign Up</button>
+                            <div style={{color: 'red'}} >&nbsp;{activateErrorMessage}</div>
+                            <div>&nbsp;{activateResponseMessage}</div>
                         </form>
                     </div>
                 </div>

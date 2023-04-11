@@ -7,18 +7,12 @@ const GetUserRestaurants = (length, useridprop) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch(
-            `http://localhost:8080/api/restaurant/restaurants/${useridprop}`, // pass this as a variable
-            {
-                method: "GET",
-                headers: new Headers({})
-            }
-        )
-        .then(res => res.json())
-        .then(response => {
-            setData(response);
+        axios.get(`http://localhost:8080/api/restaurant/restaurants/${useridprop}`, { withCredentials: true })
+        .then((response) => {
+            console.log("getUser response data");
+            console.log(response.data);
+            setData(response.data);
             setLoading(false);
-            // console.log(response)
         })
         .catch(error => { 
             console.log(error)

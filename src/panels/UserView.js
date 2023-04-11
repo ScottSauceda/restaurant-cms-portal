@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import EditUserForm from "../forms/EditUserForm"
-import DeactivateUserForm from "../forms/DeactivateUserForm";
+// import { Link, useNavigate } from 'react-router-dom';
+// import EditUserForm from "../forms/EditUserForm"
+// import DeactivateUserForm from "../forms/DeactivateUserForm";
+import AuthService from "../services/auth.service";
 
 import { GetUserInformation } from "../hooks";
 import axios from 'axios';
 
 const UserView = () => {
-    const [data, loading] = GetUserInformation(0, sessionStorage.getItem('userId'));
+    // const [data, loading] = GetUserInformation(0, sessionStorage.getItem('userId'));
+    const [data, loading] = useState("");
+    const currentUser = AuthService.getCurrentUser();
+
+    console.log("currentUser");
+    console.log(currentUser);
+
+
     const [user, setUser] = useState(null);
 
 
@@ -63,6 +71,8 @@ const UserView = () => {
                 console.log("isActive = false");
                 setActiveState("Activate");
             }
+        } else {
+            console.log("no user to load");
         }
     }, [data]);
 
@@ -147,12 +157,16 @@ const UserView = () => {
         // const data = {id, firstName, lastName, email, phone};
 
         axios
-        .put(`http://localhost:8080/api/profile/update`, {
+        .put(`http://localhost:8080/api/profile/update`, 
+        {
             usersId: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             phone: user.phone,
+        },  
+        { 
+            withCredentials: true 
         })
         .then((response) => {
             console.log(response);
@@ -180,6 +194,9 @@ const UserView = () => {
             usersId: user.id,
             userName: user.userName,
             isActive: data.isActive
+        },  
+        { 
+            withCredentials: true 
         })
         .then((response) => {
             console.log(response);

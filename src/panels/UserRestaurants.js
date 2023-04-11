@@ -113,7 +113,7 @@ const UserRestaurants = () => {
             state: restaurant.state,
             zipCode: restaurant.zipCode,
             isActive: restaurant.isActive
-        })
+        }, { withCredentials: true })
         .then((response) => {
             console.log(response);
             console.log(response.data);

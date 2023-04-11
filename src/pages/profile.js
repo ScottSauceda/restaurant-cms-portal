@@ -12,7 +12,6 @@ const Profile = (props) => {
 
     return (
         <div>
-            <NavbarLoggedIn />
             <div className="container-lg">
                 <h1>User Profile</h1>
                 <UserView/>

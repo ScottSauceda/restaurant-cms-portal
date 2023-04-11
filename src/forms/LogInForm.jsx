@@ -43,6 +43,7 @@ const LoginForm = () => {
 
         axios
         .post("http://localhost:8080/api/auth/signin", {
+        // .post("http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/auth/signin", {
             username: data.username,
             password: data.password
         })
@@ -53,13 +54,15 @@ const LoginForm = () => {
             if(response.data) {
             
                 
-                if(response.data.roles[0] == "ROLE_OWNER"){
+                if(response.data.username && response.data.roles[0] == "ROLE_OWNER"){
                     console.log("user has role of owner, set sessionStore values and redirect to dashboard");
                     
-                    sessionStorage.setItem("userLoginStatus", "true");
-                    sessionStorage.setItem('userId', response.data.id);
+
+                    localStorage.setItem("user", JSON.stringify(response.data));
+                
+                    return response.data;
     
-                    navigate("/profile", { state: { id: response.data.id }});
+                    // navigate("/profile", { state: { id: response.data.id }});
                 } else {
                     console.log("user is not an owner, display bad credentials message on login");
 
@@ -108,7 +111,7 @@ const LoginForm = () => {
         });
         
 
-        console.log('data sent for activate user');
+        console.log('data sent for login user');
         console.log(data);
     }
 

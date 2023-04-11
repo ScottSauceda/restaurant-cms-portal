@@ -17,7 +17,7 @@ const SingleRestaurant = (props) => {
 
     return (
         <div>
-            <NavbarLoggedIn/>
+            {/* <NavbarLoggedIn/> */}
             <div className="container-lg">
                 <h1>User Restaurant #</h1>
                 <RestaurantView 
