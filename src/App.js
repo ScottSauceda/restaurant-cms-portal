@@ -25,7 +25,7 @@ import EventBus from "./common/EventBus";
 
 const App = () => {
   const [showOwnerBoard, setShowOwnerBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  // const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const App = () => {
     if (user) {
       setCurrentUser(user);
       setShowOwnerBoard(user.roles.includes("ROLE_OWNER"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
 
     EventBus.on("logout", () => {
@@ -51,98 +51,127 @@ const App = () => {
   const logOut = () => {
     AuthService.logout();
     setShowOwnerBoard(false);
-    setShowAdminBoard(false);
+    
     setCurrentUser(undefined);
   };
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          Foodie
-        </Link>
-        <div className="navbar-nav">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+
+
+        {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul>
           <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
+            <Link to={"/restaurant-cms-portal/home"} className="nav-link navFont">
               Home
             </Link>
-          </li>
+          </li> */}
 
-          {showOwnerBoard && (
+          {/* {showOwnerBoard && (
             <li className="nav-item">
-              <Link to={"/owner"} className="nav-link">
+              <Link to={"/restaurant-cms-portal/owner"} className="nav-link navFont">
                 Owner Board
               </Link>
             </li>
-          )}
+          )} */}
 
-          {showAdminBoard && (
+          {/* {showAdminBoard && (
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
+              <Link to={"/restaurant-cms-portal/admin"} className="nav-link">
                 Admin Board
               </Link>
             </li>
-          )}
+          )} */}
 
-          {currentUser && (
+          {/* {currentUser && (
             <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
+              <Link to={"/restaurant-cms-portal/owner"} className="nav-link">
+                Owner
               </Link>
             </li>
-          )}
-        </div>
+          )} */}
 
         {currentUser ? (
-          <div className="navbar-nav ml-auto">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.username}
+            <Link to={"/restaurant-cms-portal/"} className="nav-link navFont">
+              Foodie
+            </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/restaurant-cms-portal/home"} className="nav-link navFont">
+                Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/newRestaurants"} className="nav-link">
+              <Link to={"/restaurant-cms-portal/profile"} className="nav-link navFont">
+                {/* {currentUser.username} */}
+                Profile
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/restaurant-cms-portal/newRestaurants"} className="nav-link navFont">
                 Restaurants
               </Link>
             </li>
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
+              <a href="/restaurant-cms-portal/home" className="nav-link navFont" onClick={logOut}>
                 LogOut
               </a>
             </li>
+            </ul>
           </div>
         ) : (
-          <div className="navbar-nav ml-auto">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link to={"/restaurant-cms-portal/"} className="nav-link navFont">
+              Foodie
+            </Link>
+            </li>
+          <li className="nav-item">
+            <Link to={"/restaurant-cms-portal/home"} className="nav-link navFont">
+              Home
+            </Link>
+          </li>
             <li className="nav-item">
-              <Link to={"/login"} className="nav-link">
+              <Link to={"/restaurant-cms-portal/login"} className="nav-link navFont">
                 Login
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
+              <Link to={"/restaurant-cms-portal/signup"} className="nav-link navFont">
                 Sign Up
               </Link>
             </li>
+            </ul>
           </div>
         )}
       </nav>
 
       <div className="container mt-3">
         <Routes>
-          <Route exact path={"/"} element={<Home />} />
-          <Route exact path={"/home"} element={<Home />} />
-          <Route exact path="/login" element={<Login />} />
+          {/* <Route exact path={"/restaurant-cms-portal/"} element={<Home />} /> */}
+          <Route path={"/restaurant-cms-portal/home"} element={<Home />} />
+          <Route path="/restaurant-cms-portal/login" element={<Login />} />
           {/* <Route exact path="/register" element={<Register />} /> */}
-          <Route path="/signup" exact element={<Signup />} />
+          <Route path="/restaurant-cms-portal/signup" exact element={<Signup />} />
           {/* <Route exact path="/profile" element={<Profile />} /> */}
-          <Route exact path="/profile" element={<UserView />} />
-          <Route path="/user" element={<BoardUser />} />
-          <Route path="/owner" element={<BoardOwner/>} />
-          <Route path="/admin" element={<BoardAdmin />} />
-          <Route path="/newRestaurants" exact element={<UserRestaurants/>} />
-          <Route path="/restaurant" exact element={<SingleRestaurant/>} />
-          <Route path="restaurantImages" exact element={<RestaurantImages />} />
+          <Route path="/restaurant-cms-portal/profile" element={<UserView />} />
+          <Route path="/restaurant-cms-portal/user" element={<BoardUser />} />
+          <Route path="/restaurant-cms-portal/owner" element={<BoardOwner/>} />
+          <Route path="/restaurant-cms-portal/admin" element={<BoardAdmin />} />
+          <Route path="/restaurant-cms-portal/newRestaurants" exact element={<UserRestaurants/>} />
+          <Route path="/restaurant-cms-portal/restaurant" exact element={<SingleRestaurant/>} />
+          <Route path="/restaurant-cms-portal/restaurantImages" exact element={<RestaurantImages />} />
         </Routes>
       </div>
 

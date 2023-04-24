@@ -1,27 +1,31 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/test/";
+
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
+// const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/";
 
 const getPublicContent = () => {
-  return axios.get(API_URL + "all");
+  return axios.get(process.env.REACT_APP_DEV_BASE_URL + "test/all");
 };
 
-const getUserBoard = () => {
-  return axios.get(API_URL + "user");
+const getOwnerBoard = () => {
+  return axios.get(process.env.REACT_APP_DEV_BASE_URL + "test/owner", { withCredentials: true });
 };
 
-const getModeratorBoard = () => {
-  return axios.get(API_URL + "owner");
-};
+// const getUserBoard = () => {
+//   return axios.get(process.env.REACT_APP_DEV_BASE_URL + "test/user");
+// };
+
 
 const getAdminBoard = () => {
-  return axios.get(API_URL + "admin");
+  return axios.get(process.env.REACT_APP_DEV_BASE_URL + "test/admin");
 };
 
 const UserService = {
   getPublicContent,
-  getUserBoard,
-  getModeratorBoard,
+  getOwnerBoard,
   getAdminBoard,
 }
 

@@ -4,8 +4,14 @@ import React, { useState, useEffect } from "react";
 // import DeactivateUserForm from "../forms/DeactivateUserForm";
 import AuthService from "../services/auth.service";
 
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
 import { GetUserInformation } from "../hooks";
 import axios from 'axios';
+
+// const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/";
+
 
 const UserView = () => {
     const currentUser = AuthService.getCurrentUser();
@@ -36,12 +42,6 @@ const UserView = () => {
     const [activateResponseMessage, setActivateResponseMessage] = useState(null);
     const [activateErrorMessage, setActivateErrorMessage] = useState(null);
 
-    console.log('session: loginStatus');
-    console.log(sessionStorage.getItem('userLoginStatus'));
-
-    console.log('session: userId');
-    console.log(sessionStorage.getItem('userId'));
-    // localStorage.clear()
 
     useEffect(() => {
         // data from GetUserInformation
@@ -156,7 +156,7 @@ const UserView = () => {
         // const data = {id, firstName, lastName, email, phone};
 
         axios
-        .put(`http://localhost:8080/api/profile/update`, 
+        .put(process.env.REACT_APP_DEV_BASE_URL +  "profile/update", 
         {
             usersId: user.id,
             firstName: user.firstName,
@@ -189,7 +189,7 @@ const UserView = () => {
         console.log(isActive);
 
         axios
-        .put("http://localhost:8080/api/user/setActive", {
+        .put(process.env.REACT_APP_DEV_BASE_URL + "user/setActive", {
             usersId: user.id,
             userName: user.userName,
             isActive: data.isActive
@@ -237,6 +237,7 @@ const UserView = () => {
                 
     
                 <button className="button-primary" id="submitButton" type="submit" onClick={handleProfileSubmit}>Save Changes</button>
+                &nbsp;
                 <button className="button-primary" type="submit" onClick={() => setEditing(false)}>Cancel Edit</button>
                 <div style={{color: 'red'}} >&nbsp;{editErrorMessage}</div>
                 <div>&nbsp;{editResponseMessage}</div>
@@ -262,6 +263,7 @@ const UserView = () => {
                         </div>
                     )}
                     <button className="button-primary" id="submitButton" type="submit" onClick={handleActiveSubmit} style={{ opacity: 0.2 }} disabled={disabledStatus} >{activeState} User</button>
+                    &nbsp;
                     <button className="button-primary" type="submit" onClick={() => setDeactivating(false)} >Cancel Edit</button>
                     <div style={{color: 'red'}} >&nbsp;{activateErrorMessage}</div>
                     <div>&nbsp;{activateResponseMessage}</div>

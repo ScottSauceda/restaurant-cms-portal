@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from "react-router-dom";
 
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
+// const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/";
+
 const ImagesView = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -61,14 +66,14 @@ const ImagesView = (props) => {
         //     withCredentials: true
         // }
 
-        axios.delete("http://localhost:8080/api/image/restaurant/delete/"+props.restaurantId, {
+        axios.delete(process.env.REACT_APP_DEV_BASE_URL + "image/restaurant/delete/"+props.restaurantId, {
             data, withCredentials:true
         })
         .then((response) => {
             console.log(response);
             console.log(response.data);
             setDeleteImageResponseMessage(response.data);
-            navigate("/newRestaurants");    
+            navigate("/restaurant-cms-portal/newRestaurants");    
         })
         .catch((error) => {
             console.log(error);
@@ -98,6 +103,7 @@ const ImagesView = (props) => {
                     <input className="u-full-width" id="confirmImgName" name="confirmImgName" type="text" value={confirmName} placeholder="www.image.jpg" onChange={handleDeleteChange} />
 
                     <button className="button-primary" id="submitButton" type="submit" style={{ backgroundColor: 'red'}} onClick={handleDeleteSubmit}>Delete Image</button>
+                    &nbsp;
                     <button className="button-primary" type="submit" onClick={() => setDeletingPhoto(false)} >Cancel Delete</button>
                     <div style={{color: 'red'}} >&nbsp;{deleteImageErrorMessage}</div>
                     <div>&nbsp;{deleteImageResponseMessage}</div>
@@ -113,6 +119,7 @@ const ImagesView = (props) => {
                                     <div className="card justify-content-center align-items-center">
                                         <p className="p-2"><b>Image Name:</b> {image.imgName}</p>
                                         <img src={image.imgSrc} width={450} height={350} />
+                                        <br/>
                                         <button className="btn btn-primary me-2" onClick={() => {setDeletingPhoto(true); setImage(image)}}>Delete Photo</button>
                                     </div>
                                     <br />

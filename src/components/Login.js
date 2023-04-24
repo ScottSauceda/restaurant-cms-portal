@@ -6,6 +6,9 @@ import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
 
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
 const required = (value) => {
   if (!value) {
     return (
@@ -48,8 +51,8 @@ const Login = () => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          navigate("/profile");
-          window.location.reload();
+          // navigate("/restaurant-cms-portal/profile");
+          // window.location.reload();
         },
         (error) => {
           const resMessage =
@@ -102,7 +105,7 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group text-center">
             <button className="btn btn-primary btn-block" disabled={loading}>
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>

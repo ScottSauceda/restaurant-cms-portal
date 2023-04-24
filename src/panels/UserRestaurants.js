@@ -5,6 +5,11 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import axios from 'axios';
 
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
+// const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/";
+
 const UserRestaurants = () => {
     const navigate = useNavigate();
     const currentUser = AuthService.getCurrentUser();
@@ -68,7 +73,7 @@ const UserRestaurants = () => {
         // e.preventDefault();
         console.log('restaurant');
         console.log(restaurant);
-        navigate("/restaurant", { state : { selected_restaurant: restaurant }});
+        navigate("/restaurant-cms-portal/restaurant", { state : { selected_restaurant: restaurant }});
     }
 
     const handleAddRestaurantChange = e => {
@@ -107,7 +112,7 @@ const UserRestaurants = () => {
         console.log(restaurant);
 
         axios
-        .post("http://localhost:8080/api/restaurant/create", {
+        .post(process.env.REACT_APP_DEV_BASE_URL +  "restaurant/create", {
             ownerId: restaurant.ownerId,
             name: restaurant.name,
             address: restaurant.address,
@@ -158,7 +163,8 @@ const UserRestaurants = () => {
                     <label>Zip Code</label>
                     <input className="u-full-width" id="name" type="text" value={restaurant.zipCode} name="zipCode" placeholder="Zip Code" onChange={handleAddRestaurantChange} />
 
-                    <button className="button-primary" id="submitButton" type="submit" style={{ backgroundColor: 'red'}} onClick={handleAddRestaurantSubmit}>Add Restaurant</button>
+                    <button className="button-primary" id="submitButton" type="submit" onClick={handleAddRestaurantSubmit}>Add Restaurant</button>
+                    &nbsp;
                     <button className="button-primary" type="submit" onClick={() => setAddingRestaurant(false)} >Cancel Add</button>
                     <div style={{color: 'red'}} >&nbsp;{addRestaurantErrorMessage}</div>
                     <div>&nbsp;{addRestaurantResponseMessage}</div>

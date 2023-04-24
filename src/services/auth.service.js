@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/auth/";
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
+
+// const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/auth/";
 
 const register = (username, email, password) => {
-  return axios.post(API_URL + "signup", {
+  return axios.post(process.env.REACT_APP_DEV_BASE_URL + "signup", {
     username,
     email,
     password,
@@ -15,7 +19,7 @@ const login = (username, password) => {
   console.log("signing in user")
 
   return axios
-    .post(API_URL + "signin", {
+    .post(process.env.REACT_APP_DEV_BASE_URL + "auth/signin", {
       username,
       password,
     })
@@ -31,7 +35,7 @@ const login = (username, password) => {
 
 const logout = () => {
   localStorage.removeItem("user");
-  return axios.post(API_URL + "signout").then((response) => {
+  return axios.post(process.env.REACT_APP_DEV_BASE_URL + "auth/signout").then((response) => {
     return response.data;
   });
 };

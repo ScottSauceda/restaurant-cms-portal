@@ -17,12 +17,11 @@ const SingleRestaurant = (props) => {
     return (
         <div>
             {/* <NavbarLoggedIn/> */}
-            <div className="container-lg">
-                <h1>User Restaurant #</h1>
+
                 <RestaurantView 
                     restaurant={location.state.selected_restaurant}
                 />
-            </div>
+
         </div>
     )
 }

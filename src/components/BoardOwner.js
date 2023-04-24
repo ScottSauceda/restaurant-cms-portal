@@ -5,9 +5,10 @@ import EventBus from "../common/EventBus";
 
 const BoardOwner = () => {
     const [content, setContent] = useState("");
+    console.log("ownerBoard, pre userservice call");
 
     useEffect(() => {
-      UserService.getModeratorBoard().then(
+      UserService.getOwnerBoard().then(
         (response) => {
           setContent(response.data);
         },
@@ -21,9 +22,9 @@ const BoardOwner = () => {
   
           setContent(_content);
   
-          if (error.response && error.response.status === 401) {
-            EventBus.dispatch("logout");
-          }
+          // if (error.response && error.response.status === 401) {
+          //   EventBus.dispatch("logout");
+          // }
         }
       );
     }, []);

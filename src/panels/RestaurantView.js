@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
+// console.log(process.env.REACT_APP_DEV_BASE_URL);
+// console.log(process.env.REACT_APP_BASE_PROD_BASE_URL);
+
+// const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/";
+
 const RestaurantView = (props) => {
     const navigate = useNavigate();
     
@@ -198,7 +203,7 @@ const RestaurantView = (props) => {
         console.log("restaurant");
         console.log(restaurant);
 
-        axios.put("http://localhost:8080/api/restaurant/update", 
+        axios.put(process.env.REACT_APP_DEV_BASE_URL + "restaurant/update", 
         {
             restaurantId: restaurant.id,
             ownerId: restaurant.ownerId,
@@ -216,7 +221,7 @@ const RestaurantView = (props) => {
             console.log(response);
             console.log(response.data);
             setEditResponseMessage(response.data);
-            navigate("/newRestaurants");    
+            navigate("/restaurant-cms-portal/newRestaurants");    
 
         })
         .catch((error) => {
@@ -241,7 +246,7 @@ const RestaurantView = (props) => {
         console.log(isActive);
 
 
-        axios.put("http://localhost:8080/api/restaurant/setActive", 
+        axios.put(process.env.REACT_APP_DEV_BASE_URL + "restaurant/setActive", 
         {
             restaurantId: restaurant.id,
             ownerId: restaurant.ownerId,
@@ -254,7 +259,7 @@ const RestaurantView = (props) => {
             console.log(response);
             console.log(response.data);
             setActivateResponseMessage(response.data);
-            navigate("/newRestaurants");    
+            navigate("/restaurant-cms-portal/newRestaurants");    
         })
         .catch((error) => {
             console.log(error);
@@ -285,7 +290,7 @@ const RestaurantView = (props) => {
 
 
         axios
-        .post("http://localhost:8080/api/image/restaurant/create/"+restaurant.id, 
+        .post(process.env.REACT_APP_DEV_BASE_URL + "image/restaurant/create/"+restaurant.id, 
         {
             imgName: data.imgName,
             imgSrc: data.imgSrc,
@@ -299,7 +304,7 @@ const RestaurantView = (props) => {
             console.log(response);
             console.log(response.data);
             setAddImageResponseMessage(response.data);
-            navigate("/newRestaurants");    
+            navigate("/restaurant-cms-portal/newRestaurants");    
         })
         .catch((error) => {
             console.log(error);
@@ -321,7 +326,7 @@ const RestaurantView = (props) => {
     const handleViewImages = images => {
         console.log('images');
         console.log(images);
-        navigate("/restaurantImages", { state : { restaurant_images: images, restaurant_id: restaurant.id }});
+        navigate("/restaurant-cms-portal/restaurantImages", { state : { restaurant_images: images, restaurant_id: restaurant.id }});
     } 
 
     return (
@@ -354,6 +359,7 @@ const RestaurantView = (props) => {
                     <input className="u-full-width" id="zipCode" type="text" value={restaurant.zipCode} name="zipCode" placeholder = "Zip Code" onChange={handleRestaurantChange}/>
 
                     <button className="button-primary" id="submitButton" type="submit" onClick={handleRestaurantSubmit}>Save Changes</button>
+                    &nbsp;
                     <button className="button-primary" type="submit" onClick={() => setEditing(false)}>Cancel Edit</button>
                     <div style={{color: 'red'}} >&nbsp;{editErrorMessage}</div>
                     <div>&nbsp;{editResponseMessage}</div>
@@ -381,6 +387,7 @@ const RestaurantView = (props) => {
                     )}
 
                     <button className="button-primary" id="submitButton" type="submit" onClick={handleActiveSubmit} style={{ opacity: 0.2 }} disabled={disabledStatus} >{activeState} User</button>
+                    &nbsp;
                     <button className="button-primary" type="submit" onClick={() => setDeactivating(false)} >Cancel Edit</button>
                     <div style={{color: 'red'}} >&nbsp;{activateErrorMessage}</div>
                     <div>&nbsp;{activateResponseMessage}</div>
@@ -397,7 +404,8 @@ const RestaurantView = (props) => {
                     <label>Image URL</label>
                     <input className="u-full-width" id="name" type="text" value={image.imgSrc} name="imgSrc" placeholder="www.image.jpg" onChange={handleImageChange} />
                     
-                    <button className="button-primary" id="submitButton" type="submit" style={{ backgroundColor: 'red'}} onClick={handleImageSubmit}>Add Image</button>
+                    <button className="button-primary" id="submitButton" type="submit" onClick={handleImageSubmit}>Add Image</button>
+                    &nbsp;
                     <button className="button-primary" type="submit" onClick={() => setAddingPhoto(false)} >Cancel Add</button>
                     <div style={{color: 'red'}} >&nbsp;{addImageErrorMessage}</div>
                     <div>&nbsp;{addImageResponseMessage}</div>
@@ -433,8 +441,8 @@ const RestaurantView = (props) => {
                                     <p className="p-2"><b>Owner Name:</b> {props.restaurant.ownerName}</p>
                                     <p className="p-2"><b>Active Status:</b> {props.restaurant.isActive}</p>
                                     {/* <p className="p-2"><b>Restaurant Images:</b> <a href="" onClick={() => handleViewImages(props.restaurant.restaurantImages)}>View Restaurant Images</a> </p> */}
-                                    <p className="p-2"><b>Restaurant Images:</b> <Link to={"/restaurantImages"} state = {{restaurant_images: props.restaurant.restaurantImages, restaurant_id: props.restaurant.id}}>View Restaurant Images</Link> </p>
-                                    <p className="p-2"><b>Reviews:</b> <a href={"http://localhost:8081/restaurants/" + props.restaurant.id} >See Reviews</a></p>
+                                    <p className="p-2"><b>Restaurant Images:</b> <Link to={"/restaurant-cms-portal/restaurantImages"} state = {{restaurant_images: props.restaurant.restaurantImages, restaurant_id: props.restaurant.id}}>View Restaurant Images</Link> </p>
+                                    <p className="p-2"><b>Reviews:</b> <a href={"http://localhost:8081/restaurants/" + props.restaurant.id} target="_blank" >See Reviews</a></p>
                                 </form>
                             </div>
                             <button className="btn btn-primary me-2" onClick={() => setAddingPhoto(true)}>Add Photo</button>

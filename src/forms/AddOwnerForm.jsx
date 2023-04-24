@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_URL = "http://spring-boot-dev.us-east-1.elasticbeanstalk.com/api/";
+
 const AddOwnerForm = () => {
     const initUser = {  userName: '', password: '', firstName: '', lastName: '', email: '', phone: '', roleName: ["owner"], isActive: true};
 
@@ -57,7 +59,7 @@ const AddOwnerForm = () => {
         console.log('data', data);
 
         axios
-        .post("http://localhost:8080/api/user/signup", {
+        .post(API_URL + "user/signup", {
             username: data.userName,
             password: data.password,
             firstName: data.firstName,
@@ -110,8 +112,10 @@ const AddOwnerForm = () => {
                             <label>Phone</label>
                             <input className="u-full-width" id="phone" type="text" value={user.phone} name="phone" placeholder="###-###-####" required onChange={handleChange} />
 
-                            <button className="button-primary" id="submitButton" type="submit" style={{ backgroundColor: 'red'}} onClick={handleSubmit}>Sign Up</button>
-                            <div style={{color: 'red'}} >&nbsp;{activateErrorMessage}</div>
+                            <div class="text-center">
+                                <button className="btn btn-primary btn-blocky" id="submitButton" type="submit"  onClick={handleSubmit}>Sign Up</button>
+                            </div>
+                            <div  >&nbsp;{activateErrorMessage}</div>
                             <div>&nbsp;{activateResponseMessage}</div>
                         </form>
                     </div>
